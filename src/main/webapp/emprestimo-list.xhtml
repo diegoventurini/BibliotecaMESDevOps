@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{layoutMB.template}">
+    
+    <ui:define name="metadata">
+        
+        <ui:param name="title" value="Lista de Empréstimos"/>
+        
+        <style type="text/css">
+            
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+            
+        </style>
+        
+    </ui:define>
+
+    <ui:define name="body">
+        
+        <h:form>
+            
+            <p:focus context="@form"/>
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <div id="main-buttons"
+                         class="hidden-sm hidden-xs">
+
+                        <p:commandButton action="/emprestimo-form?faces-redirect=true"
+                                         icon="fa fa-plus"
+                                         value="Novo Empréstimo"
+                                         styleClass="btn-primary"/>
+
+                        <p:spacer width="5"/>
+
+                        <p:commandButton value="Apagar Selecionado"
+                                         icon="fa fa-trash"
+                                         styleClass="btn-danger"
+                                         action="#{emprestimoListBean.exclude(actionEvent)}"
+                                         disabled="#{empty emprestimoListBean.emprestimosSelecionados or emprestimoListBean.emprestimosSelecionados.size() == 0}"
+                                         process="@this"
+                                         update="@form">
+
+                            <p:confirm header="Confirmação"
+                                       message="Você tem certeza?"
+                                       icon="ui-icon-danger"/>
+
+                        </p:commandButton>
+                        
+                    </div>
+
+                    <p:splitButton value="Novo Empréstimo"
+                                   action="/emprestimo-form?faces-redirect=true"
+                                   icon="fa fa-plus"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+
+                        <p:menuitem value="Apagar Selecionado"
+                                    action="#{emprestimoListBean.exclude(actionEvent)}"
+                                    process="@this"
+                                    update="@form"
+                                    disabled="#{empty emprestimoListBean.emprestimosSelecionados or emprestimoListBean.emprestimosSelecionados.size() == 0}"
+                                    icon="fa fa-trash">
+
+                            <p:confirm header="Confirmação"
+                                       message="Você tem certeza?"
+                                       icon="ui-icon-danger"/>
+
+                        </p:menuitem>
+
+                    </p:splitButton>
+
+                    <p:separator/>
+
+                    <p:dataTable id="tabelaEmprestimos"
+                                 widgetVar="tabelaEmprestimos"
+                                 var="a"
+                                 value="#{emprestimoListBean.emprestimos}"
+                                 emptyMessage="Nenhum registro encontrado"
+                                 rows="5"
+                                 rowKey="#{a.id}"
+                                 paginator="true"
+                                 filteredValue="#{emprestimoListBean.emprestimosFiltrados}"
+                                 paginatorPosition="bottom"
+                                 selection="#{emprestimoListBean.emprestimosSelecionados}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                                 currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
+                                 rowsPerPageTemplate="5,10,15,20,30">
+
+                        <p:ajax event="rowSelectCheckbox"
+                                update="@(.ui-button, .ui-confirm-dialog)"/>
+                        
+                        <p:ajax event="rowUnselectCheckbox"
+                                update="@(.ui-button, .ui-confirm-dialog)"/>
+                        
+                        <p:ajax event="rowSelect"
+                                update="@(.ui-button, .ui-confirm-dialog)"/>
+                        
+                        <p:ajax event="rowUnselect"
+                                update="@(.ui-button, .ui-confirm-dialog)"/>
+
+                        <f:facet name="header">
+                            
+                            <h:outputText value="Buscar emprestimo por id: " />
+                            
+                            <p:inputNumber id="inptId"
+                                           decimalPlaces="0"
+                                           thousandSeparator=""
+                                           decimalSeparator=""
+                                           value="#{emprestimoListBean.id}"/>
+                            
+                            <p:spacer height="5"/>
+                            
+                            <p:commandButton id="brBuscar"
+                                             value="Buscar"
+                                             action="#{emprestimoListBean.buscarPorId(emprestimoListBean.id)}"
+                                             process="@form"
+                                             update="@form"
+                                             styleClass="btn-flat bg-black btn-states"
+                                             partialSubmit="true"/>
+                            
+                        </f:facet>
+                        
+                        <p:column selectionMode="multiple"
+                                  width="5%"
+                                  styleClass="align-center"
+                                  exportable="false"/>
+
+                        <p:column headerText="Id"
+                                  sortBy="#{a.id}"
+                                  filterBy="#{a.id}"
+                                  width="40">
+                            
+                            <h:outputText value="#{a.id}"/>
+                                
+                        </p:column>
+                        
+                        <p:column headerText="Data Emprestimo"
+                                  sortBy="#{a.dataEmprestimo}"
+                                  filterBy="#{a.dataEmprestimo}">
+                            
+                            <h:outputText value="#{a.dataEmprestimo}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            
+                        </p:column>
+                        
+                        <p:column headerText="Data Devolução Prevista"
+                                  sortBy="#{a.dataDevolucaoPrevista}"
+                                  filterBy="#{a.dataDevolucaoPrevista}">
+                            
+                            <h:outputText value="#{a.dataDevolucaoPrevista}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            
+                        </p:column>
+                        
+                        <p:column headerText="Exemplar"
+                                  sortBy="#{a.idExemplar}"
+                                  filterBy="#{a.idExemplar}">
+                            
+                            <h:outputText value="#{a.idExemplar}"/>
+                            
+                        </p:column>
+                        
+                        <p:column headerText="Usuário"
+                                  sortBy="#{a.idUsuario}"
+                                  filterBy="#{a.idUsuario}">
+                            
+                            <h:outputText value="#{a.idUsuario}"/>
+                            
+                        </p:column>
+                        
+                        <p:column headerText="Devolução"
+                                  sortBy="#{a.dataDevolucao}"
+                                  filterBy="#{a.dataDevolucao}">
+                            
+                            <h:outputText value="#{a.dataDevolucao}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            
+                            <!--Botão Efetua Cancelamento-->
+                            <p:commandButton rendered="#{a.dataDevolucao == null}"
+                                             icon="ui-icon-plus"
+                                             styleClass="btn-danger"
+                                             value="Efetuar Devolução"
+                                             action="#{emprestimoListBean.efetuaDevolucao}"
+                                             process="@this"
+                                             update="@form"> 
+                                
+                                <f:setPropertyActionListener target="#{emprestimoListBean.emprestimo}"
+                                                             value="#{a}" />
+                                
+                                <p:confirm header="Confirmação"
+                                           message="Você tem certeza?"
+                                           icon="ui-icon-danger"/>
+                                
+                            </p:commandButton>
+                            
+                        </p:column>
+
+                    </p:dataTable>
+                    
+                    <!--Exportar dados da página-->
+                    <div align="center">
+                        <h3>Exportar dados da página</h3>
+
+                        <h:commandLink id="excel">
+                            <p:graphicImage value="/resources/images/exports/excel.png" />
+                            <p:dataExporter type="xls" target="tabelaEmprestimos" fileName="emprestimos" postProcessor="#{emprestimoListBean.postProcessXLS}" />
+                        </h:commandLink>
+
+                        <h:commandLink id="pdf">
+                            <p:graphicImage value="/resources/images/exports/pdf.png" />
+                            <p:dataExporter type="pdf" target="tabelaEmprestimos" fileName="emprestimos" preProcessor="#{emprestimoListBean.preProcessPDF}" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/exports/csv.png" width="24"/>
+                            <p:dataExporter type="csv" target="tabelaEmprestimos" fileName="emprestimos" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/exports/xml.png" width="24"/>
+                            <p:dataExporter type="xml" target="tabelaEmprestimos" fileName="emprestimos" />
+                        </h:commandLink>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <p:confirmDialog global="true"
+                             showEffect="fade"
+                             hideEffect="fade"
+                             styleClass="box-danger box-solid">
+                
+                <p:commandButton value="Sim"
+                                 type="button"
+                                 styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                
+                <p:commandButton value="Não"
+                                 type="button"
+                                 styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+                
+            </p:confirmDialog>
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

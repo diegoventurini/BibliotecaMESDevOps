@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ul class="sidebar-menu tree" data-widget="tree">
+        <li>
+            <p:link outcome="/index.xhtml">
+                <i class="fa fa-home"></i>
+                <span>Home</span>
+            </p:link>
+        </li>
+        
+        <li class="treeview">
+            <p:link href="#"
+                    rendered="#{loginBean.menu('Cadastros')}">
+                <i class="fa fa-edit"></i>
+                <span>Cadastros</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </p:link>
+            <ul class="treeview-menu">
+                <li>
+                    <p:link outcome="/assunto-list.xhtml"
+                            rendered="#{loginBean.menu('Assuntos')}">
+                        <i class="fa fa-bookmark-o"></i>
+                        <span>Assuntos</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link outcome="/autor-list.xhtml"
+                            rendered="#{loginBean.menu('Autores')}">
+                        <i class="fa fa-vcard-o"></i>
+                        <span>Autores</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link outcome="/editora-list.xhtml"
+                            rendered="#{loginBean.menu('Editoras')}">
+                        <i class="fa fa-briefcase"></i>
+                        <span>Editoras</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link outcome="/livro-list.xhtml"
+                            rendered="#{loginBean.menu('Livros')}">
+                        <i class="fa fa-book"></i>
+                        <span>Livros</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link outcome="/exemplar-list.xhtml"
+                            rendered="#{loginBean.menu('Exemplares')}">
+                        <i class="fa fa-clone"></i>
+                        <span>Exemplares</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link outcome="/usuario-list.xhtml"
+                            rendered="#{loginBean.menu('Usuários')}">
+                        <i class="fa fa-user-o"></i>
+                        <span>Usuários</span>
+                    </p:link>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p:link outcome="/acervo-list.xhtml">
+                <i class="fa fa-folder-o"></i>
+                <span>Acervo</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/reserva-list.xhtml"
+                    rendered="#{loginBean.menu('Reservas')}">
+                <i class="fa fa-calendar"></i>
+                <span>Reservas</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/emprestimo-list.xhtml"
+                    rendered="#{loginBean.menu('Empréstimos')}">
+                <i class="fa fa-exchange"></i>
+                <span>Empréstimos</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/dashboard.xhtml"
+                    rendered="#{loginBean.menu('Dashboard')}">
+                <i class="fa fa-area-chart"></i>
+                <span>Dashboard</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/relatorios.xhtml"
+                    rendered="#{loginBean.menu('Relatórios')}">
+                <i class="fa fa-file-word-o"></i>
+                <span>Relatórios</span>
+            </p:link>
+        </li>
+    </ul>
+</ui:composition>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+        
+        <f:metadata>
+            
+            <f:viewParam name="id"
+                         value="#{exemplarFormBean.id}"
+                         converter="javax.faces.Long"/>
+            
+            <f:event type="preRenderView"
+                     listener="#{exemplarFormBean.init}"/>
+            
+        </f:metadata>
+        
+        <ui:param name="renderFormAsterisks" value="true"/>
+        
+    </ui:define>
+    
+    <ui:define name="title">
+        
+        <h:outputText value="Exemplar"/>
+        
+    </ui:define>
+    
+    <ui:define name="body">
+        
+        <h:form id="form"
+                prependId="false">
+            
+            <p:focus context="@form"/>
+            
+            <p:panel styleClass="box-primary card">
+                
+                <div id="main-buttons"
+                     class="hidden-sm hidden-xs">
+                    
+                    <p:commandButton value="Salvar"
+                                     action="#{exemplarFormBean.record(actionEvent)}"
+                                     update="@form"
+                                     icon="fa fa-check"
+                                     styleClass="btn-primary"/>
+                    
+                    <p:spacer width="5"
+                              rendered="#{exemplarFormBean.isNew()}"/>
+                    
+                    <p:commandButton value="Limpar"
+                                     action="#{exemplarFormBean.clear}"
+                                     process="@this"
+                                     icon="fa fa-refresh"
+                                     styleClass="btn-success"
+                                     update="@form"
+                                     rendered="#{exemplarFormBean.isNew()}"
+                                     resetValues="true"/>
+                    
+                    <p:spacer width="5"
+                              rendered="#{not exemplarFormBean.isNew()}"/>
+
+                    <p:commandButton value="Apagar"
+                                     action="#{exemplarFormBean.exclude(actionEvent)}"
+                                     process="@this"
+                                     rendered="#{not exemplarFormBean.isNew()}"
+                                     icon="fa fa-trash"
+                                     styleClass="btn-danger">
+                        
+                        <f:setPropertyActionListener value="true"
+                                                     target="#{facesContext.externalContext.flash.keepMessages}"/>
+                        
+                        <p:confirm header="Confirmação"
+                                   message="Você tem certeza?"
+                                   icon="ui-icon-danger"/>
+                        
+                    </p:commandButton>
+                    
+                    <p:spacer width="5"/>
+                    
+                    <p:commandButton value="Voltar"
+                                     immediate="true"
+                                     action="exemplar-list?faces-redirect=true"
+                                     process="@this"
+                                     icon="fa fa-reply"/>
+                    
+                </div>
+                
+                <p:splitButton value="Salvar"
+                               action="#{exemplarFormBean.record(actionEvent)}"
+                               update="@form"
+                               icon="fa fa-check"
+                               styleClass="hidden-md hidden-lg btn-primary">
+                    
+                    <p:menuitem value="Limpar"
+                                action="#{exemplarFormBean.clear}"
+                                process="@this"
+                                update="@form"
+                                rendered="#{exemplarFormBean.isNew()}"
+                                resetValues="true"
+                                icon="fa fa-refresh"/>
+                    
+                    <p:menuitem value="Apagar"
+                                action="#{exemplarFormBean.exclude(actionEvent)}"
+                                process="@this"
+                                rendered="#{not exemplarFormBean.isNew()}"
+                                icon="fa fa-trash">
+                        
+                        <f:setPropertyActionListener value="true"
+                                                     target="#{facesContext.externalContext.flash.keepMessages}"/>
+                        
+                        <p:confirm header="Confirmação"
+                                   message="Você tem certeza?"
+                                   icon="ui-icon-danger"/>
+                        
+                    </p:menuitem>
+                    
+                    <p:separator/>
+                    
+                    <p:menuitem value="Voltar"
+                                action="exemplar-list?faces-redirect=true"
+                                process="@this"
+                                immediate="true"
+                                icon="fa fa-reply"/>
+                    
+                </p:splitButton>
+
+                <hr/>
+
+                <div class="ui-g ui-fluid">
+                    
+                    <div class="ui-sm-12 ui-g-2 ui-g-nopad"> 
+                        
+                        <div class="ui-sm-12 ui-g-11">
+                            
+                            <p:outputLabel
+                                for="id"
+                                value="Id"/>
+                            
+                        </div>
+                        
+                        <div class="ui-sm-12 ui-g-11" >
+                            
+                            <p:inputText id="id"
+                                         value="#{exemplarFormBean.exemplar.id}"
+                                         readonly="true"
+                                         styleClass="form-control ui-state-disabled"
+                                         style="width: 100%"
+                                         placeholder="Novo"/>
+                            
+                            <span class="help-block"> 
+                                
+                                <p:message for="id" />
+                                
+                            </span>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="ui-sm-12 ui-g-8 ui-g-nopad"> 
+                        
+                        <div class="ui-sm-12 ui-g-11">
+                            
+                            <p:outputLabel value="Livro"
+                                           for="inptLivro"/>
+                            
+                        </div>
+                        
+                        <div class="ui-sm-12 ui-g-11" >
+                            
+                            <p:selectOneMenu id="inptLivro"
+                                             value="#{exemplarFormBean.exemplar.idLivro}"
+                                             converter="livroConverter"
+                                             required="true"
+                                             requiredMessage="Não foi selecionado um livro"
+                                             filter="true"
+                                             filterMatchMode="contains">
+                                
+                                <f:selectItem itemLabel="Selecione o livro"
+                                              itemDisabled="true" />
+                                
+                                <f:selectItems value="#{exemplarFormBean.livros}"/>
+                                
+                            </p:selectOneMenu>
+                            
+                            
+                            <span class="help-block"> 
+                                
+                                <p:message for="inptLivro" /> 
+                                
+                            </span> 
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="ui-sm-12 ui-g-2 ui-g-nopad"> 
+                        
+                        <div class="ui-sm-12 ui-g-11">
+                            
+                            <p:outputLabel
+                                for="inptCircular"
+                                value="Circular"/>
+                            
+                        </div>
+                        
+                        <div class="ui-sm-12 ui-g-11" >
+                            
+                            <p:selectBooleanCheckbox id="inptCircular"
+                                                     value="#{exemplarFormBean.exemplar.circular}"/>
+                            
+                            <span class="help-block"> 
+                                
+                                <p:message for="inptCircular" />
+                                
+                            </span>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                <h:panelGroup id="footer"
+                              layout="block"
+                              styleClass="hidden-sm hidden-md hidden-lg">
+                    
+                    <hr/>
+                    
+                    <p:splitButton value="Salvar"
+                                   action="#{exemplarFormBean.record(actionEvent)}"
+                                   update="@form"
+                                   icon="fa fa-check"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+                        
+                        <p:menuitem value="Limpar"
+                                    action="#{exemplarFormBean.clear}"
+                                    process="@this"
+                                    update="@form"
+                                    rendered="#{exemplarFormBean.isNew()}"
+                                    resetValues="true"
+                                    icon="fa fa-refresh"/>
+                        
+                        <p:menuitem value="Apagar"
+                                    action="#{exemplarFormBean.exclude(actionEvent)}"
+                                    process="@this"
+                                    rendered="#{not exemplarFormBean.isNew()}"
+                                    icon="fa fa-trash">
+                            
+                            <f:setPropertyActionListener value="true"
+                                                         target="#{facesContext.externalContext.flash.keepMessages}"/>
+                            
+                            <p:confirm header="Confirmação"
+                                       message="Você tem certeza?"
+                                       icon="ui-icon-danger"/>
+                            
+                        </p:menuitem>
+                        
+                        <p:separator/>
+                        
+                        <p:menuitem value="Voltar"
+                                    action="exemplar-list?faces-redirect=true"
+                                    process="@this"
+                                    immediate="true"
+                                    icon="fa fa-reply"/>
+                        
+                    </p:splitButton>
+                    
+                </h:panelGroup>
+                
+            </p:panel>
+
+            <p:confirmDialog global="true"
+                             showEffect="fade"
+                             hideEffect="fade"
+                             styleClass="box-danger box-solid">
+                
+                <p:commandButton value="Sim"
+                                 type="button"
+                                 styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                
+                <p:commandButton value="Não"
+                                 type="button"
+                                 styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+                
+            </p:confirmDialog>
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

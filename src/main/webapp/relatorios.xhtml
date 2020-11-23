@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{layoutMB.template}">
+    
+    <ui:define name="metadata">
+        
+        <ui:param name="title" value="Relatórios"/>
+        
+        <style type="text/css"> 
+            
+            .ui-dataview-list .ui-dataview-row {
+                
+                border-bottom: 1px solid #A8A8A8;
+                
+                padding: 25px 10px;
+                
+                border-bottom-color: #A8A8A8;
+                
+            }
+
+            .logo {
+                
+                width: 5%;
+                
+            }
+            
+            .detail {
+                
+                width: 85%;
+                
+                padding-left: 25px;
+                
+            }
+            
+        </style>
+        
+    </ui:define>
+
+    <ui:define name="body">
+        
+        <h:form id="formPrincipal">
+            
+            <p:focus context="@form"/>
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad"> 
+                        
+                        <div class="ui-sm-12 ui-g-11">
+                            
+                            <p:outputLabel value="Relatório"
+                                           for="inptRelatorio"/>
+                            
+                        </div>
+                        
+                        <div class="ui-sm-12 ui-g-11" >
+                            
+                            <p:selectOneMenu id="inptRelatorio"
+                                             value="#{relatorioBean.relatorio}"
+                                             required="true"
+                                             requiredMessage="O tipo de relatório não foi selecionado"
+                                             filter="true"
+                                             filterMatchMode="contains">
+                                
+                                <f:selectItems value="#{relatorioBean.tipos}"/>
+                                
+                            </p:selectOneMenu>
+                            
+                            <span class="help-block"> 
+                                
+                                <p:message for="inptRelatorio" /> 
+                                
+                            </span> 
+                            
+                            <p:commandButton id="Relatorio_01"
+                                             ajax="false"
+                                             value="Gerar Relatório"
+                                             action="#{relatorioBean.gerarRelatorio()}"
+                                             onclick="this.form.target = '_blank'" /> 
+                            
+                        </div>
+                    
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </h:form>
+        
+        <h:form id="formGerencial">
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad"> 
+                        
+                        <div class="ui-sm-12 ui-g-11">
+                            
+                            <p:outputLabel value="Relatório Gerencial"
+                                           for="range"/>
+                            
+                        </div>
+                        
+                        <div class="ui-sm-12 ui-g-11" >
+                        
+                            <p:datePicker id="range"
+                                          selectionMode="range"
+                                          value="#{relatorioBean.range}"
+                                          readonlyInput="true"
+                                          placeholder="Selecione a data inicial e final"
+                                          locale="pt_BR"/>
+                            
+                            <span class="help-block"> 
+                                
+                                <p:message for="range" /> 
+                                
+                            </span> 
+                            
+                            <p:commandButton id="Relatorio_01"
+                                             ajax="false"
+                                             value="Gerar Relatório"
+                                             action="#{relatorioBean.gerarRelatorioGerencial()}"
+                                             onclick="this.form.target = '_blank'" /> 
+                    
+                        </div>
+                            
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </h:form>
+        
+        <h:outputScript name="js/calendar.js" />
+
+    </ui:define>
+
+</ui:composition>

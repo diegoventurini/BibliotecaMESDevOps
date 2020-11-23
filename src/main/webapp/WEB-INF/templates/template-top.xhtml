@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/admin-top.xhtml"> 
+
+    <ui:define name="head">
+        <title>Biblioteca LPWSD</title>
+        <meta name="theme-color" content="#444"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+        <f:loadBundle var="msg" basename="starter"/>
+        <h:outputStylesheet library="css" name="starter.css"/>
+    </ui:define>
+
+    <ui:define name="logo">
+        Biblioteca LPWSD
+    </ui:define>
+
+     <ui:define name="menu">
+         <ui:include src="/includes/menubar.xhtml"/>
+     </ui:define>
+
+    <ui:define name="top-menu">
+        <ui:include src="/includes/top-bar.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="footer">
+        <p>
+            Copyright (C) 2019 - Biblioteca LPWSD
+        </p>
+
+        <script type="text/javascript">
+            if(isMobile()) {
+                $('a.ui-link').click(function() {
+                    $(this).prop('disabled', true);
+                    showBar();
+                });
+            }
+        </script>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="#{layoutMB.template}">
+    
+    <ui:define name="metadata">
+        
+        <ui:param name="title" value="Dashboard"/>
+        
+        <style type="text/css">
+            
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+            
+        </style>
+        
+    </ui:define>
+
+    <ui:define name="body">
+        
+        <h:form>
+            
+            <p:focus context="@form"/>
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <p:commandLink onclick="export01()">
+                    
+                        Exportar Gráfico para PDF
+
+                    </p:commandLink>
+                    
+                    <p:barChart model="#{dashboardBean.livrosReservados}"
+                                style="width: 100%; height: 500px;"
+                                widgetVar="01"/>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <p:commandLink onclick="export02()">
+                    
+                        Exportar Gráfico para PDF
+
+                    </p:commandLink>
+                    
+                    <p:barChart model="#{dashboardBean.livrosEmprestados}" style="width: 100%; height: 500px;" widgetVar="02"/>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <p:commandLink onclick="export03()">
+                    
+                        Exportar Gráfico para PDF
+
+                    </p:commandLink>
+                    
+                    <p:barChart model="#{dashboardBean.livrosReservadosCategoria}" style="width: 100%; height: 500px;" widgetVar="03"/>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <p:commandLink onclick="export04()">
+                    
+                        Exportar Gráfico para PDF
+
+                    </p:commandLink>
+                    
+                    <p:barChart model="#{dashboardBean.livrosEmprestadosCategoria}" style="width: 100%; height: 500px;" widgetVar="04"/>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="box box-primary">
+                
+                <div class="box-header with-border">
+                    
+                    <p:commandLink onclick="export05()">
+                    
+                        Exportar Gráfico para PDF
+
+                    </p:commandLink>
+                    
+                    <p:barChart model="#{dashboardBean.livrosReservadosEmprestados}" style="width: 100%; height: 500px;" widgetVar="05"/>
+                    
+                </div>
+                
+            </div>
+            
+        </h:form>
+        
+        <h:outputScript name="js/pdfmake.min.js" />
+        <h:outputScript name="js/vfs_fonts.js" />
+        
+        <script>
+        function export01() {
+           var docDefinition = {
+              content: [
+                    'Livros Reservados',
+                    {
+                       image: $(PF('01').exportAsImage()).attr('src'),
+                       width: 520
+                    }
+                  ]
+           }
+           pdfMake.createPdf(docDefinition).open();
+           pdfMake.createPdf(docDefinition).download('Gráfico_01.pdf');
+        }
+        
+        function export02() {
+           var docDefinition = {
+              content: [
+                    
+                    'Livros Emprestados',
+                    {
+                       image: $(PF('02').exportAsImage()).attr('src'),
+                       width: 520
+                    }
+                  ]
+           }
+           pdfMake.createPdf(docDefinition).open();
+           pdfMake.createPdf(docDefinition).download('Gráfico_02.pdf');
+        }
+        
+        function export03() {
+           var docDefinition = {
+              content: [
+                    'Livros Reservados por Categoria',
+                    {
+                       image: $(PF('03').exportAsImage()).attr('src'),
+                       width: 520
+                    }
+                  ]
+           }
+           pdfMake.createPdf(docDefinition).open();
+           pdfMake.createPdf(docDefinition).download('Gráfico_03.pdf');
+        }
+        
+        function export04() {
+           var docDefinition = {
+              content: [
+                    
+                    'Livros Emprestados Categoria',
+                    {
+                       image: $(PF('04').exportAsImage()).attr('src'),
+                       width: 520
+                    }
+                  ]
+           }
+           pdfMake.createPdf(docDefinition).open();
+           pdfMake.createPdf(docDefinition).download('Gráfico_04.pdf');
+        }
+        
+        function export05() {
+           var docDefinition = {
+              content: [
+                    'Livros Reservados Emprestados',
+                    {
+                       image: $(PF('05').exportAsImage()).attr('src'),
+                       width: 520
+                    },
+                  ]
+           }
+           pdfMake.createPdf(docDefinition).open();
+           pdfMake.createPdf(docDefinition).download('Gráfico_05.pdf');
+        }
+     </script>
+
+    </ui:define>
+    
+    
+
+</ui:composition>

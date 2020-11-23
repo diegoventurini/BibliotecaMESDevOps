@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioGerencial" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="be42c943-d185-40f5-b940-1885b193c50b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BibliotecaLPWSD"/>
+	<parameter name="p_inicio" class="java.util.Date"/>
+	<parameter name="p_fim" class="java.util.Date"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT l.titulo
+         ,COUNT(e.idLivro)     qtde_exemplares
+		 ,coalesce(res.qtd, 0) qtde_reservas
+         ,coalesce(emp.qtd, 0) qtde_emprestimos
+	 FROM Livro               l
+LEFT JOIN (SELECT ex.idLivro
+			     ,COUNT(*) qtd
+	         FROM Emprestimo e
+                 ,Exemplar   ex
+	        WHERE e.idExemplar           = ex.id
+              AND e.dataEmprestimo BETWEEN $P{p_inicio} AND $P{p_fim}
+		 GROUP BY ex.idLivro) emp
+	   ON l.id= emp.idLivro
+LEFT JOIN (SELECT ex.idLivro
+			     ,COUNT(*) qtd
+	         FROM Reserva  r
+                 ,Exemplar ex
+	     WHERE r.idExemplar        = ex.id
+           AND r.dataReserva BETWEEN $P{p_inicio} AND $P{p_fim}
+      GROUP BY ex.idLivro)    res
+	   ON l.id = res.idLivro
+LEFT JOIN Exemplar            e
+       ON l.id = e.idLivro
+ GROUP BY l.titulo]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Livro"/>
+	</field>
+	<field name="qtde_exemplares" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qtde_exemplares"/>
+	</field>
+	<field name="qtde_reservas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qtde_reservas"/>
+	</field>
+	<field name="qtde_emprestimos" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qtde_emprestimos"/>
+	</field>
+	<group name="titulo">
+		<groupExpression><![CDATA[$F{titulo}]]></groupExpression>
+	</group>
+	<group name="qtde_exemplares">
+		<groupExpression><![CDATA[$F{qtde_exemplares}]]></groupExpression>
+	</group>
+	<group name="qtde_reservas">
+		<groupExpression><![CDATA[$F{qtde_reservas}]]></groupExpression>
+	</group>
+	<group name="qtde_emprestimos">
+		<groupExpression><![CDATA[$F{qtde_emprestimos}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="-20" y="-30" width="595" height="109" forecolor="#FFFFFF" backcolor="#093866" uuid="8ff9dc68-596e-4b2f-a819-fad10e50fd79"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Relatório Gerencial]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="460" y="-22" width="100" height="30" forecolor="#FFFFFF" uuid="39013bd2-7fb3-497f-ad05-b310f7765730"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="278" height="30" forecolor="#FFFFFF" backcolor="#093866" uuid="80abd795-420a-4998-9a2e-b6ef14586293">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0a7c5158-b486-468e-b244-d6861475b4f6"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Livro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="278" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#093866" uuid="cfeec798-7779-4539-b04e-48fc4f76056b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a87e76d-6bb3-4d03-9dae-ee3b04832583"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Qtde Exemplares]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="378" y="0" width="82" height="30" forecolor="#FFFFFF" backcolor="#093866" uuid="8c02f757-3a42-4aac-96db-d5d31708ac8b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f94d76c8-fcd7-4545-b3cd-88e6a13fa1eb"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Qtde Reservas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="460" y="0" width="95" height="30" forecolor="#FFFFFF" backcolor="#093866" uuid="d75cddd4-ffeb-46a0-82b0-9bd88d4c049c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e09b342-1989-4fd1-982f-afaf089d1be9"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Qtde Empréstimos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="278" height="30" uuid="ac1a4fe2-8d1f-49dd-9ec3-64e794f76d2a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0a7c5158-b486-468e-b244-d6861475b4f6"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="0" width="100" height="30" uuid="9bfc9f4e-9d5f-4dce-bee7-e11c8afcc0d9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a87e76d-6bb3-4d03-9dae-ee3b04832583"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtde_exemplares}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="0" width="82" height="30" uuid="3f1e3eea-163b-4f5d-afbb-5b0d6626f799">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f94d76c8-fcd7-4545-b3cd-88e6a13fa1eb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtde_reservas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="95" height="30" uuid="6cfa2eee-0330-402f-a8b6-3e1624220106">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e09b342-1989-4fd1-982f-afaf089d1be9"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtde_emprestimos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="178" y="12" width="100" height="30" uuid="942600c4-92bd-4dd7-903f-ec432c94b262"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="278" y="12" width="100" height="30" uuid="83522fd6-db16-4263-a4d1-fd539e657243"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

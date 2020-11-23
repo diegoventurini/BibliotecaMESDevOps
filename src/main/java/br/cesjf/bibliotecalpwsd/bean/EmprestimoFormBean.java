@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.EmprestimoDAO;
@@ -19,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -27,10 +23,6 @@ import javax.inject.Named;
 import org.omnifaces.util.Faces;
 import org.primefaces.event.SelectEvent;
 
-/**
- *
- * @author dmeireles
- */
 @Named
 @ViewScoped
 public class EmprestimoFormBean implements Serializable {
@@ -179,7 +171,7 @@ public class EmprestimoFormBean implements Serializable {
                 exemplaresPermitidos.addAll(exemplares);
             } else {
                 for(Exemplar e: exemplares) {
-                    if(e.getIdLivro().getId() == livro.getId()) {
+                    if(Objects.equals(e.getIdLivro().getId(), livro.getId())) {
                         exemplaresPermitidos.add(e);
                     }
                 }
@@ -189,7 +181,7 @@ public class EmprestimoFormBean implements Serializable {
             
             for(Exemplar e: lista) {
                 for(Emprestimo emp: new EmprestimoDAO().buscarTodas()) {
-                    if(emp.getIdExemplar().getId() == e.getId()) {
+                    if(Objects.equals(emp.getIdExemplar().getId(), e.getId())) {
                         if(emp.getDataDevolucao() == null && emp.getDataEmprestimo().compareTo(dataReserva) <= 0 && emp.getDataDevolucaoPrevista().compareTo(dataReserva) >= 0) {
                             exemplaresPermitidos.remove(e);
                             continue;
@@ -201,7 +193,7 @@ public class EmprestimoFormBean implements Serializable {
                     }
                 }
                 for(Reserva r: new ReservaDAO().buscarTodas()) {
-                    if(r.getIdExemplar().getId() == e.getId()){
+                    if(Objects.equals(r.getIdExemplar().getId(), e.getId())){
                         if(!r.getCancelada() && r.getDataReserva().compareTo(dataReserva) <= 0 && r.getDataDevolucaoPrevista().compareTo(dataReserva) >= 0) {
                             exemplaresPermitidos.remove(e);
                         }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.EmprestimoDAO;
@@ -18,10 +13,6 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.cdi.ViewScoped;
 import javax.inject.Named;
 
-/**
- *
- * @author dmeireles
- */
 @Named
 @ViewScoped
 public class EmprestimoListBean extends ProcessReport implements Serializable {

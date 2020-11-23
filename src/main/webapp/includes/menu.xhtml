@@ -6,7 +6,7 @@
     <ul class="sidebar-menu tree" data-widget="tree">
         <li>
             <p:link outcome="/index.xhtml">
-                <i class="fa fa-home"></i>
+                <em class="fa fa-home"></em>
                 <span>Home</span>
             </p:link>
         </li>
@@ -14,52 +14,52 @@
         <li class="treeview">
             <p:link href="#"
                     rendered="#{loginBean.menu('Cadastros')}">
-                <i class="fa fa-edit"></i>
+                <em class="fa fa-edit"></em>
                 <span>Cadastros</span>
                 <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
+                    <em class="fa fa-angle-left pull-right"></em>
                 </span>
             </p:link>
             <ul class="treeview-menu">
                 <li>
                     <p:link outcome="/assunto-list.xhtml"
                             rendered="#{loginBean.menu('Assuntos')}">
-                        <i class="fa fa-bookmark-o"></i>
+                        <em class="fa fa-bookmark-o"></em>
                         <span>Assuntos</span>
                     </p:link>
                 </li>
                 <li>
                     <p:link outcome="/autor-list.xhtml"
                             rendered="#{loginBean.menu('Autores')}">
-                        <i class="fa fa-vcard-o"></i>
+                        <em class="fa fa-vcard-o"></em>
                         <span>Autores</span>
                     </p:link>
                 </li>
                 <li>
                     <p:link outcome="/editora-list.xhtml"
                             rendered="#{loginBean.menu('Editoras')}">
-                        <i class="fa fa-briefcase"></i>
+                        <em class="fa fa-briefcase"></em>
                         <span>Editoras</span>
                     </p:link>
                 </li>
                 <li>
                     <p:link outcome="/livro-list.xhtml"
                             rendered="#{loginBean.menu('Livros')}">
-                        <i class="fa fa-book"></i>
+                        <em class="fa fa-book"></em>
                         <span>Livros</span>
                     </p:link>
                 </li>
                 <li>
                     <p:link outcome="/exemplar-list.xhtml"
                             rendered="#{loginBean.menu('Exemplares')}">
-                        <i class="fa fa-clone"></i>
+                        <em class="fa fa-clone"></em>
                         <span>Exemplares</span>
                     </p:link>
                 </li>
                 <li>
                     <p:link outcome="/usuario-list.xhtml"
                             rendered="#{loginBean.menu('Usuários')}">
-                        <i class="fa fa-user-o"></i>
+                        <em class="fa fa-user-o"></em>
                         <span>Usuários</span>
                     </p:link>
                 </li>
@@ -67,37 +67,50 @@
         </li>
         <li>
             <p:link outcome="/acervo-list.xhtml">
-                <i class="fa fa-folder-o"></i>
+                <em class="fa fa-folder-o"></em>
                 <span>Acervo</span>
             </p:link>
         </li>
         <li>
             <p:link outcome="/reserva-list.xhtml"
                     rendered="#{loginBean.menu('Reservas')}">
-                <i class="fa fa-calendar"></i>
+                <em class="fa fa-calendar"></em>
                 <span>Reservas</span>
             </p:link>
         </li>
         <li>
             <p:link outcome="/emprestimo-list.xhtml"
                     rendered="#{loginBean.menu('Empréstimos')}">
-                <i class="fa fa-exchange"></i>
+                <em class="fa fa-exchange"></em>
                 <span>Empréstimos</span>
             </p:link>
         </li>
         <li>
             <p:link outcome="/dashboard.xhtml"
                     rendered="#{loginBean.menu('Dashboard')}">
-                <i class="fa fa-area-chart"></i>
+                <em class="fa fa-area-chart"></em>
                 <span>Dashboard</span>
             </p:link>
         </li>
         <li>
             <p:link outcome="/relatorios.xhtml"
                     rendered="#{loginBean.menu('Relatórios')}">
-                <i class="fa fa-file-word-o"></i>
+                <em class="fa fa-file-word-o"></em>
                 <span>Relatórios</span>
             </p:link>
         </li>
+        
+       
+        
+        <li>
+            <p:link outcome="/graficos.xhtml"
+                    rendered="#{loginBean.menu('Gráficos')}">
+                <em class="fa fa-file-word-o"></em>
+                <span>Gráficos</span>
+            </p:link>
+        </li>
+        
+       
+        
     </ul>
 </ui:composition>

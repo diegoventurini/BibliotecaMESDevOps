@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.cesjf.bibliotecalpwsd.util;
 
 import com.lowagie.text.BadElementException;
@@ -21,10 +16,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.FillPatternType;
-/**
- *
- * @author dmeireles
- */
+
 public abstract class ProcessReport {
     
     public void postProcessXLS(Object document) {

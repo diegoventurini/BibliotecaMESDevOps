@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.cesjf.bibliotecalpwsd.util;
 
 import javax.persistence.EntityManager;
@@ -12,10 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Session;
 
-/**
- *
- * @author dmeireles
- */
 public class PersistenceUtil {
     
     private static final String PERSISTENCE_UNIT_NAME = "BibliotecaLPWSD";
@@ -53,7 +44,7 @@ public class PersistenceUtil {
         if (em != null) {
             em.close();
         }
-        MANAGER.set(null);
+        MANAGER.remove();
     }
 
     public static Session getSession() {

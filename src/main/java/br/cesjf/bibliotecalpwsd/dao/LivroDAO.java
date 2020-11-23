@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.cesjf.bibliotecalpwsd.dao;
 
 import br.cesjf.bibliotecalpwsd.model.Livro;
+import br.cesjf.bibliotecalpwsd.model.RemoveSingleton;
 import br.cesjf.bibliotecalpwsd.util.PersistenceUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,12 +11,9 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-/**
- *
- * @author dmeireles
- */
 public class LivroDAO implements Serializable {
     
+    private RemoveSingleton systemRemover = RemoveSingleton.GetInstance();
     public static LivroDAO livroDAO;
 
     public static LivroDAO getInstance() {
@@ -96,7 +89,7 @@ public class LivroDAO implements Serializable {
             livro = em.merge(livro);
             em.remove(livro);
             em.getTransaction().commit();
-            Logger.getLogger (PersistenceUtil.class.getName()).log(Level.INFO, "Livro removido com sucesso!");
+            systemRemover.removedBook();
             return "Livro " + livro.getTitulo() + " removido com sucesso!";
         } catch (Exception e) {
             Logger.getLogger (PersistenceUtil.class.getName()).log(Level.WARNING, "Não foi possível remover o livro!", e.getMessage());

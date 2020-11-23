@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.AutorDAO;
@@ -17,33 +12,34 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.cdi.ViewScoped;
 import javax.inject.Named;
 
-/**
- *
- * @author dmeireles
- */
 @Named
 @ViewScoped
-public class AutorListBean extends ProcessReport implements Serializable {
+public class AutorListBean extends CommandListBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     private Autor autor;
     private List autores;
     private List autoresSelecionados;
     private List autoresFiltrados;
-    private Integer id;
 
+    @Override
+    public String toString() {
+        return "AutorListBean{" + "autor=" + autor + ", autores=" + autores + ", autoresSelecionados=" + autoresSelecionados + ", autoresFiltrados=" + autoresFiltrados + '}';
+    }
+   
     //construtor
     public AutorListBean() {
         autores = new AutorDAO().buscarTodas();
         autor = new Autor();
     }
-
+    
+    @Override
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
         msgScreen(new AutorDAO().persistir(autor));
         autores = new AutorDAO().buscarTodas();
     }
-
+    @Override
     public void exclude(ActionEvent actionEvent) {
         for (Object a: autoresSelecionados){
             msgScreen(new AutorDAO().remover((Autor) a));
@@ -54,7 +50,7 @@ public class AutorListBean extends ProcessReport implements Serializable {
     public void novo(ActionEvent actionEvent) {
         autor = new Autor();
     }
-    
+  
     public void buscarPorId(Integer id) {
         if (id == null) {
             throw new BusinessException("Insira um ID");
@@ -95,13 +91,6 @@ public class AutorListBean extends ProcessReport implements Serializable {
         this.autoresFiltrados = autoresFiltrados;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
     
     public void msgScreen(String msg) {
         if(msg.contains("Não")){

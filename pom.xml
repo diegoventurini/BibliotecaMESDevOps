@@ -5,10 +5,10 @@
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.cesjf</groupId>
-    <artifactId>BibliotecaMESDevOps</artifactId>
+    <artifactId>BibliotecaLPWSD_v1.1</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
-    <name>BibliotecaMESDevOps</name>
+    <name>BibliotecaLPWSD_v1.1</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

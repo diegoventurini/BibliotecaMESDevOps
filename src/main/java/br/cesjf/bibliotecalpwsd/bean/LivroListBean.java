@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.LivroDAO;
@@ -17,40 +12,44 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.cdi.ViewScoped;
 import javax.inject.Named;
 
-/**
- *
- * @author dmeireles
- */
 @Named
 @ViewScoped
-public class LivroListBean extends ProcessReport implements Serializable {
+public class LivroListBean extends CommandListBean implements Serializable {
     
     private static final long serialVersionUID = 1L;
     private Livro livro;
     private List livros;
     private List livrosSelecionados;
     private List livrosFiltrados;
-    private Integer id;
-
-    //construtor
+   
+    @Override
+    public String toString() {
+        return "LivroListBean{" + "livro=" + livro + ", livros=" + livros + ", livrosSelecionados=" + livrosSelecionados + ", livrosFiltrados=" + livrosFiltrados + '}';
+    }
+    
+      //construtor
     public LivroListBean() {
         livros = new LivroDAO().buscarTodas();
         livro = new Livro();
     }
 
     //Métodos dos botões 
+    @Override
     public void record(ActionEvent actionEvent) {
         msgScreen(new LivroDAO().persistir(livro));
         livros = new LivroDAO().buscarTodas();
+        addMensagem();
     }
-
+    
+    @Override
     public void exclude(ActionEvent actionEvent) {
         for (Object a: livrosSelecionados){
             msgScreen(new LivroDAO().remover((Livro) a));
         }
         livros = new LivroDAO().buscarTodas();
+        deleteMensagem();
     }
-    
+        
     public void novo(ActionEvent actionEvent) {
         livro = new Livro();
     }
@@ -95,14 +94,6 @@ public class LivroListBean extends ProcessReport implements Serializable {
         this.livrosFiltrados = livrosFiltrados;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
     public void msgScreen(String msg) {
         if(msg.contains("Não")){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
